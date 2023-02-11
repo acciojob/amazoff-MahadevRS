@@ -106,15 +106,16 @@ public class OrderRepository {
     }
 
     public void deletePartnerById(String partnerId) {
+        List<String> orders=new ArrayList<>();
         for(String orderid:orderPartnerMap.keySet()){
             String partnerid=orderPartnerMap.get(orderid);
             if(partnerid.equals(partnerId)){
-                orderPartnerMap.remove(orderid);
+                orders.add(orderid);
             }
         }
-//        while(orderPartnerMap.containsValue(partnerId)){
-//            orderPartnerMap.
-//        }
+        for(String orderid:orders){
+            orderPartnerMap.remove(orderid);
+        }
 
         deliveryPartnerMap.remove(partnerId);
 
