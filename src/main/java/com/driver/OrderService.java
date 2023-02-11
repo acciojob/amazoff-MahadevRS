@@ -1,6 +1,7 @@
 package com.driver;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,5 +41,25 @@ public class OrderService {
 
     public List<String> getAllOrders() {
         return orderRepository.getAllOrders();
+    }
+
+    public Integer getCountofUnassignedOrders() {
+        return orderRepository.getCountofUnassignedOrders();
+    }
+
+    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
+        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(time,partnerId);
+    }
+
+    public String getLastDeliveryTimeByPartnerId(String partnerId) {
+        return orderRepository.getLastDeliveryTimeByPartnerId(partnerId);
+    }
+
+    public void deletePartnerById(String partnerId) {
+        orderRepository.deletePartnerById();
+    }
+
+    public void deleteOrderById(String orderId) {
+        orderRepository.deleteOrderById();
     }
 }

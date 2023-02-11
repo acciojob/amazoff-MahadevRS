@@ -1,5 +1,6 @@
 package com.driver;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -43,8 +44,8 @@ public class OrderRepository {
 
     public Integer getOrderCountByPartnerId(String partnerId) {
         int no=0;
-        for(String partnerid: orderPartnerMap.keySet()){
-            if(partnerid.equals(partnerId)){
+        for(String orderid: orderPartnerMap.keySet()){
+            if((orderPartnerMap.get(orderid)).equals(partnerId)){
                 no++;
             }
         }
@@ -53,8 +54,8 @@ public class OrderRepository {
 
     public List<String> getOrdersByPartnerId(String partnerId) {
         List<String> orders=new ArrayList<>();
-        for(String partnerid:orderPartnerMap.keySet()){
-            if(partnerid.equals(partnerId)){
+        for(String orderid: orderPartnerMap.keySet()){
+            if((orderPartnerMap.get(orderid)).equals(partnerId)){
                 orders.add(orderPartnerMap.get(partnerId));
             }
         }
@@ -65,5 +66,48 @@ public class OrderRepository {
         List<String> orders=new ArrayList<>();
         for(String orderid:orderMap.keySet()) orders.add(orderid);
         return orders;
+    }
+
+    public Integer getCountofUnassignedOrders() {
+        int count=0;
+        for(String orderid:orderMap.keySet()){
+            if(!orderPartnerMap.containsKey(orderid)) count++;
+        }
+        return count;
+    }
+
+    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
+        int timeinint=0;
+        timeinint=60*Integer.parseInt(time.substring(0,2));
+        timeinint=timeinint+Integer.parseInt(time.substring(3,5));
+        int count=0;
+        for(String orderid:orderPartnerMap.keySet()){
+            if((orderPartnerMap.get(orderid)).equals(partnerId)){
+                if (orderMap.get(orderid).getDeliveryTime()>timeinint) count++;
+            }
+        }
+        return count;
+    }
+
+    public String getLastDeliveryTimeByPartnerId(String partnerId) {
+        String time="";
+
+        int lasttime=0;
+        for(String orderid:orderPartnerMap.keySet()){
+            if((orderPartnerMap.get(orderid)).equals(partnerId)){
+                lasttime=Math.max(lasttime,orderMap.get(orderid).getDeliveryTime());
+            }
+        }
+        time+=Integer.toString(lasttime/60);
+        time+=":";
+        time+=Integer.toString(lasttime%60);
+        return time;
+        
+    }
+
+    public void deletePartnerById() {
+    }
+
+    public void deleteOrderById() {
     }
 }
