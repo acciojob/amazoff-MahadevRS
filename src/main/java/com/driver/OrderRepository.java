@@ -105,9 +105,18 @@ public class OrderRepository {
         
     }
 
-    public void deletePartnerById() {
+    public void deletePartnerById(String partnerId) {
+        for(String orderid:orderPartnerMap.keySet()){
+            if((orderPartnerMap.get(orderid)).equals(partnerId)){
+                orderPartnerMap.remove(orderid);
+            }
+        }
+        deliveryPartnerMap.remove(partnerId);
+
     }
 
-    public void deleteOrderById() {
+    public void deleteOrderById(String orderId) {
+        orderMap.remove(orderId);
+        orderPartnerMap.remove(orderId);
     }
 }

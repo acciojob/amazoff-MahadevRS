@@ -56,10 +56,10 @@ public class OrderService {
     }
 
     public void deletePartnerById(String partnerId) {
-        orderRepository.deletePartnerById();
+        orderRepository.deletePartnerById(partnerId);
     }
 
     public void deleteOrderById(String orderId) {
-        orderRepository.deleteOrderById();
+        orderRepository.deleteOrderById(orderId);
     }
 }
