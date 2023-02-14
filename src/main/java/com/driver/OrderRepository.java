@@ -101,8 +101,10 @@ public class OrderRepository {
 //                lasttime=Math.max(lasttime,orderMap.get(orderid).getDeliveryTime());
 //            }
 //        }
+        if(lasttime/60<10) time+="0";
         time+=Integer.toString(lasttime/60);
         time+=":";
+        if(lasttime%60<10) time+="0";
         time+=Integer.toString(lasttime%60);
         return time;
         
